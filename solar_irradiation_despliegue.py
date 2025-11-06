@@ -32,7 +32,10 @@ modelo, labelEncoder, variables = pickle.load(open(filename, 'rb'))
 # data = pd.read_csv("Datos_irradiancia_Solar_Futuros.csv")
 # data.head()
 
-"""## **Calidad del modelo**
+"""# **Predicción de irradiancia solar**
+
+
+## Calidad del modelo
 
 1. Exactitud: 87%
 2. Precisión: 84%
@@ -42,8 +45,6 @@ modelo, labelEncoder, variables = pickle.load(open(filename, 'rb'))
 
 # Aquí va la interfaz grafica
 import streamlit as st
-
-st.title("Predicción de irradiancia solar")
 
 with st.form("Formulario para la predicción"):
   st.subheader("Hora y Mes")
