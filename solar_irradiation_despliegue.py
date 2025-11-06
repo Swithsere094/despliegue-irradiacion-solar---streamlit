@@ -45,7 +45,7 @@ import streamlit as st
 
 st.title("Predicción de irradiancia solar")
 
-with st.form("Formulario para la predicción")
+with st.form("Formulario para la predicción"):
   st.subheader("Hora y Mes")
 
   # Hora
