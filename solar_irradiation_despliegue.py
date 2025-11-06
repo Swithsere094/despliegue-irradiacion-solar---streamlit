@@ -72,11 +72,8 @@ with st.form("Formulario para la predicción"):
   mes = mes_options[mes_display]
 
   # Es Nocturno
-  es_nocturno = st.checkbox(
-      "¿Es horario nocturno? (6:00 PM - 6:00 AM)",
-      value=False
-  )
-  es_nocturno_value = 1 if es_nocturno else 0
+
+  es_nocturno_value = 1 if hora > 6 and hora < 18 else 0
 
   st.divider()
 
