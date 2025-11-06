@@ -74,7 +74,7 @@ with st.form("Formulario para la predicción"):
 
   # Es Nocturno
 
-  es_nocturno_value = 1 if hora > 6 and hora < 18 else 0
+  es_nocturno_value = 0 if hora > 6 and hora < 18 else 1
 
   st.divider()
 
