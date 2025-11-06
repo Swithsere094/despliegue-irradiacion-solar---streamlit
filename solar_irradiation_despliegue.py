@@ -159,8 +159,6 @@ with st.form("Formulario para la predicción"):
   )
 
   suma_nubes = cloud_cover_high + cloud_cover_medium + cloud_cover_low
-  if suma_nubes > cloud_cover_total:
-        st.warning("La suma de las coberturas por nivel (",suma_nubes,"%) excede la cobertura total (",cloud_cover_total,"%). Por favor ajuste los valores.")
 
   st.divider()
 
@@ -204,6 +202,6 @@ if submitted:
     data["Prediccion"] = labelEncoder.inverse_transform(Y_fut)
     data.head()
 
-    st.info("Predicción")
+    st.header("Predicción: ")
 
     data
