@@ -175,8 +175,6 @@ with st.form("formulario_prediccion"):
 
 if submitted:
 
-  st.subheader("Predicción: ")
-
   datos_input = {
       'Hora': hora,
       'Mes': mes,
@@ -206,7 +204,40 @@ if submitted:
   print(Y_fut)
 
   # Almacenamos la predicción revirtiendo el labelEncoder
-  data["Prediccion"] = labelEncoder.inverse_transform(Y_fut)
+  prediccion = labelEncoder.inverse_transform(Y_fut)
   data.head()
 
-  data
+  st.subheader("Resultados de la predicción: ")
+
+  # Mapeo de los meses
+  meses = {1: "Ene", 2: "Feb", 3: "Mar", 4: "Abr", 5: "May", 6: "Jun",
+            7: "Jul", 8: "Ago", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dic"}
+
+  # Mapeo de la hora
+  horas = {0: "12:00 AM", 1: "1:00 AM", 2: "2:00 AM", 3: "3:00 AM", 4: "4:00 AM",
+            5: "5:00 AM", 6: "6:00 AM", 7: "7:00 AM", 8: "8:00 AM", 9: "9:00 AM",
+            10: "10:00 AM", 11: "11:00 AM", 12: "12:00 PM", 13: "1:00 PM",
+            14: "2:00 PM", 15: "3:00 PM", 16: "4:00 PM", 17: "5:00 PM",
+            18: "6:00 PM", 19: "7:00 PM", 20: "8:00 PM", 21: "9:00 PM",
+            22: "10:00 PM", 23: "11:00 PM"}
+
+  # Creo el dataframe de salida
+  df_horizontal = pd.DataFrame({
+      'Mes': [meses[datos_input['Mes']]],
+      'Hora': [horas[datos_input['Hora']]],
+      'Nocturno': ['Sí' if datos_input['Es_nocturno'] == 1 else 'No'],
+      'Temp (°C)': [datos_input['Temperature']],
+      'Precip (mm)': [datos_input['Precipitation_Total']],
+      'Humedad (%)': [datos_input['Relative_Humidity']],
+      'Nub Total (%)': [datos_input['Cloud_Cover_Total']],
+      'Nub Alta (%)': [datos_input['Cloud_Cover_High']],
+      'Nub Media (%)': [datos_input['Cloud_Cover_Medium']],
+      'Nub Baja (%)': [datos_input['Cloud_Cover_Low']],
+      'Predicción': [prediccion]
+  })
+
+  st.dataframe(
+        df_horizontal,
+        use_container_width=True,
+        hide_index=True
+    )
