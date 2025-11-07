@@ -46,148 +46,167 @@ modelo, labelEncoder, variables = pickle.load(open(filename, 'rb'))
 # Aquí va la interfaz grafica
 import streamlit as st
 
-st.subheader("Hora y Mes")
 
-# Hora
-hora_options = {
-    "12:00 AM": 0, "1:00 AM": 1, "2:00 AM": 2, "3:00 AM": 3,
-    "4:00 AM": 4, "5:00 AM": 5, "6:00 AM": 6, "7:00 AM": 7,
-    "8:00 AM": 8, "9:00 AM": 9, "10:00 AM": 10, "11:00 AM": 11,
-    "12:00 PM": 12, "1:00 PM": 13, "2:00 PM": 14, "3:00 PM": 15,
-    "4:00 PM": 16, "5:00 PM": 17, "6:00 PM": 18, "7:00 PM": 19,
-    "8:00 PM": 20, "9:00 PM": 21, "10:00 PM": 22, "11:00 PM": 23
-}
+# Sidebar con información de las variables del modelo:
+with st.sidebar:
+    st.header("ℹ️ Información")
+    st.write("""
+    **Variables del modelo:**
+    - Hora (0-23)
+    - Mes (1-12)
+    - Es nocturno (0/1)
+    - Temperatura (-26 a 40°C)
+    - Precipitación (0-20mm)
+    - Humedad Relativa (0-100%)
+    - Cobertura de Nubes (0-100%)
+    """)
 
-hora_display = st.selectbox("Hora", list(hora_options.keys()))
-hora = hora_options[hora_display]
+with st.form("formulario_prediccion"):
+  st.subheader("Hora y Mes")
 
-# Mes
-mes_options = {
-    "Enero": 1, "Febrero": 2, "Marzo": 3, "Abril": 4,
-    "Mayo": 5, "Junio": 6, "Julio": 7, "Agosto": 8,
-    "Septiembre": 9, "Octubre": 10, "Noviembre": 11, "Diciembre": 12
-}
+  # Hora
+  hora_options = {
+      "12:00 AM": 0, "1:00 AM": 1, "2:00 AM": 2, "3:00 AM": 3,
+      "4:00 AM": 4, "5:00 AM": 5, "6:00 AM": 6, "7:00 AM": 7,
+      "8:00 AM": 8, "9:00 AM": 9, "10:00 AM": 10, "11:00 AM": 11,
+      "12:00 PM": 12, "1:00 PM": 13, "2:00 PM": 14, "3:00 PM": 15,
+      "4:00 PM": 16, "5:00 PM": 17, "6:00 PM": 18, "7:00 PM": 19,
+      "8:00 PM": 20, "9:00 PM": 21, "10:00 PM": 22, "11:00 PM": 23
+  }
 
-mes_display = st.selectbox("Mes", list(mes_options.keys()))
-mes = mes_options[mes_display]
+  hora_display = st.selectbox("Hora", list(hora_options.keys()))
+  hora = hora_options[hora_display]
 
-# Es Nocturno
+  # Mes
+  mes_options = {
+      "Enero": 1, "Febrero": 2, "Marzo": 3, "Abril": 4,
+      "Mayo": 5, "Junio": 6, "Julio": 7, "Agosto": 8,
+      "Septiembre": 9, "Octubre": 10, "Noviembre": 11, "Diciembre": 12
+  }
 
-es_nocturno_value = 0 if hora > 6 and hora < 18 else 1
+  mes_display = st.selectbox("Mes", list(mes_options.keys()))
+  mes = mes_options[mes_display]
 
-st.divider()
+  # Es Nocturno
 
-st.subheader("Temperatura y precipitación")
+  es_nocturno_value = 0 if hora > 6 and hora < 18 else 1
 
-# Temperatura
-temperature = st.slider(
-    "Temperatura (°C)",
-    min_value=-26,
-    max_value=40,
-    value=20,
-    step=1,
-)
+  st.divider()
 
-# Precipitación
-precipitation_total = st.slider(
-    "Precipitación Total (mm)",
-    min_value=0.0,
-    max_value=20.0,
-    value=0.0,
-    step=0.1,
-)
+  st.subheader("Temperatura y precipitación")
 
-st.divider()
+  # Temperatura
+  temperature = st.slider(
+      "Temperatura (°C)",
+      min_value=-26,
+      max_value=40,
+      value=20,
+      step=1,
+  )
 
-st.subheader("Humedad")
+  # Precipitación
+  precipitation_total = st.slider(
+      "Precipitación Total (mm)",
+      min_value=0.0,
+      max_value=20.0,
+      value=0.0,
+      step=0.1,
+  )
 
-# Humedad
-relative_humidity = st.slider(
-    "Humedad Relativa (%)",
-    min_value=0,
-    max_value=100,
-    value=50,
-    step=1,
-)
+  st.divider()
 
-st.divider()
+  st.subheader("Humedad")
 
-st.subheader("Cobertura de nubes")
+  # Humedad
+  relative_humidity = st.slider(
+      "Humedad Relativa (%)",
+      min_value=0,
+      max_value=100,
+      value=50,
+      step=1,
+  )
 
-st.write("Nota: Las coberturas por nivel (Alta, Media, Baja) deben ser menores o iguales a la cobertura total.")
+  st.divider()
 
-# Cobertura total de nubes
-cloud_cover_total = st.slider(
-    "Cobertura Total de Nubes (%)",
-    min_value=0,
-    max_value=100,
-    value=50,
-    step=1,
-)
+  st.subheader("Cobertura de nubes")
 
-# Cobertura en altura alta
-cloud_cover_high = st.slider(
-    "Nubes Altas (%)",
-    min_value=0,
-    max_value=100,  # Limitado por total
-    value=20,
-    step=1,
-)
+  st.write("Nota: Las coberturas por nivel (Alta, Media, Baja) deben ser menores o iguales a la cobertura total.")
 
-# Cobertura en altura media
-cloud_cover_medium = st.slider(
-    "Nubes Medias (%)",
-    min_value=0,
-    max_value=100,  # Limitado por total
-    value=20,
-    step=1,
-)
+  # Cobertura total de nubes
+  cloud_cover_total = st.slider(
+      "Cobertura Total de Nubes (%)",
+      min_value=0,
+      max_value=100,
+      value=50,
+      step=1,
+  )
 
-# Cobertura en altura baja
-cloud_cover_low = st.slider(
-    "Nubes Bajas (%)",
-    min_value=0,
-    max_value=100,  # Limitado por total
-    value=10,
-    step=1,
-)
+  # Cobertura en altura alta
+  cloud_cover_high = st.slider(
+      "Nubes Altas (%)",
+      min_value=0,
+      max_value=100,
+      value=20,
+      step=1,
+  )
 
-suma_nubes = cloud_cover_high + cloud_cover_medium + cloud_cover_low
+  # Cobertura en altura media
+  cloud_cover_medium = st.slider(
+      "Nubes Medias (%)",
+      min_value=0,
+      max_value=100,
+      value=20,
+      step=1,
+  )
 
-st.divider()
+  # Cobertura en altura baja
+  cloud_cover_low = st.slider(
+      "Nubes Bajas (%)",
+      min_value=0,
+      max_value=100,
+      value=10,
+      step=1,
+  )
+
+  st.divider()
+  submitted = st.form_submit_button("Realizar Predicción", use_container_width=True)
 
 """# Predicción:"""
 
-datos_input = {
-    'Hora': hora,
-    'Mes': mes,
-    'Es_nocturno': es_nocturno_value,
-    'Temperature': temperature,
-    'Precipitation_Total': precipitation_total,
-    'Relative_Humidity': relative_humidity,
-    'Cloud_Cover_Total': cloud_cover_total,
-    'Cloud_Cover_High': cloud_cover_high,
-    'Cloud_Cover_Medium': cloud_cover_medium,
-    'Cloud_Cover_Low': cloud_cover_low
-}
+if submitted:
 
-data = pd.DataFrame([datos_input])
+  st.subheader("Predicción: ")
 
-# Preparación de los datos
-data_preparada = data.copy()
-data_preparada = pd.get_dummies(data, columns=['Hora', 'Mes', 'Es_nocturno'], drop_first=False, dtype=int) # Para despliegue siempre drop en falso
-data_preparada.head()
+  datos_input = {
+      'Hora': hora,
+      'Mes': mes,
+      'Es_nocturno': es_nocturno_value,
+      'Temperature': temperature,
+      'Precipitation_Total': precipitation_total,
+      'Relative_Humidity': relative_humidity,
+      'Cloud_Cover_Total': cloud_cover_total,
+      'Cloud_Cover_High': cloud_cover_high,
+      'Cloud_Cover_Medium': cloud_cover_medium,
+      'Cloud_Cover_Low': cloud_cover_low
+  }
 
-# Adicionamos las columnas faltantes
-data_preparada = data_preparada.reindex(columns=variables, fill_value=0)
-data_preparada.head()
+  data = pd.DataFrame([datos_input])
 
-# Hacemos la predicción del modelo
-Y_fut = modelo.predict(data_preparada)
-print(Y_fut)
+  # Preparación de los datos
+  data_preparada = data.copy()
+  data_preparada = pd.get_dummies(data, columns=['Hora', 'Mes', 'Es_nocturno'], drop_first=False, dtype=int) # Para despliegue siempre drop en falso
+  data_preparada.head()
 
-# Almacenamos la predicción revirtiendo el labelEncoder
-data["Prediccion"] = labelEncoder.inverse_transform(Y_fut)
-data.head()
+  # Adicionamos las columnas faltantes
+  data_preparada = data_preparada.reindex(columns=variables, fill_value=0)
+  data_preparada.head()
 
-data
+  # Hacemos la predicción del modelo
+  Y_fut = modelo.predict(data_preparada)
+  print(Y_fut)
+
+  # Almacenamos la predicción revirtiendo el labelEncoder
+  data["Prediccion"] = labelEncoder.inverse_transform(Y_fut)
+  data.head()
+
+  data
