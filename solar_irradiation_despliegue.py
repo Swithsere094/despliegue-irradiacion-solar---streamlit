@@ -255,6 +255,6 @@ if submitted:
   st.markdown("---")
 
   # Predicción
-  col_left, col_center, col_right = st.columns([1, 2, 1])
+  col_left, col_center, col_right = st.columns(3)
   with col_center:
     st.metric("Irradiancia Solar", prediccion[0])
