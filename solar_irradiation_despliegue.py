@@ -257,4 +257,4 @@ if submitted:
   # Predicción
   col_left, col_center, col_right = st.columns([1, 2, 1])
   with col_center:
-    st.metric("Irradiancia Solar", prediccion)
+    st.metric("Irradiancia Solar", prediccion[0])
