@@ -226,31 +226,31 @@ if submitted:
   # Fila 1: Datos temporales
   col1, col2, col3 = st.columns(3)
   with col1:
-      st.metric("Mes", meses[datos_originales['Mes']])
+      st.metric("Mes", meses[datos_input['Mes']])
   with col2:
-      st.metric("Hora", horas[datos_originales['Hora']])
+      st.metric("Hora", horas[datos_input['Hora']])
   with col3:
-      st.metric("Nocturno", "Sí" if datos_originales['Es_nocturno'] == 1 else "No")
+      st.metric("Nocturno", "Sí" if datos_input['Es_nocturno'] == 1 else "No")
 
   # Fila 2: Condiciones climáticas
   col4, col5, col6 = st.columns(3)
-    with col4:
-        st.metric("Temperatura", f"{datos_originales['Temperature']} °C")
-    with col5:
-        st.metric("Precipitación", f"{datos_originales['Precipitation_Total']} mm")
-    with col6:
-        st.metric("Humedad", f"{datos_originales['Relative_Humidity']} %")
+  with col4:
+      st.metric("Temperatura", f"{datos_input['Temperature']} °C")
+  with col5:
+      st.metric("Precipitación", f"{datos_input['Precipitation_Total']} mm")
+  with col6:
+        st.metric("Humedad", f"{datos_input['Relative_Humidity']} %")
 
   # Fila 3: Cobertura Nubosa
   col7, col8, col9, col10 = st.columns(4)
-    with col7:
-        st.metric("Nub Total", f"{datos_originales['Cloud_Cover_Total']} %")
-    with col8:
-        st.metric("Nub Alta", f"{datos_originales['Cloud_Cover_High']} %")
-    with col9:
-        st.metric("Nub Media", f"{datos_originales['Cloud_Cover_Medium']} %")
-    with col10:
-        st.metric("Nub Baja", f"{datos_originales['Cloud_Cover_Low']} %")
+  with col7:
+      st.metric("Nub Total", f"{datos_input['Cloud_Cover_Total']} %")
+  with col8:
+      st.metric("Nub Alta", f"{datos_input['Cloud_Cover_High']} %")
+  with col9:
+      st.metric("Nub Media", f"{datos_input['Cloud_Cover_Medium']} %")
+  with col10:
+        st.metric("Nub Baja", f"{datos_input['Cloud_Cover_Low']} %")
 
   st.markdown("---")
 
