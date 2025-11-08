@@ -12,6 +12,11 @@ Original file is located at
 - Cargamos los datos futuros
 - Preparamos los datos futuros
 - Aplicamos el modelo para la predicción
+
+### **Participantes**
+
+1. Michael Andres Gamboa Garza
+2. Daniel Jesús Castillo Botero
 """
 
 # Importamos librerías basicas
@@ -34,13 +39,31 @@ modelo, labelEncoder, variables = pickle.load(open(filename, 'rb'))
 
 """# **Predicción de irradiancia solar**
 
+## Calidad del Modelo
 
-## Calidad del modelo
+Para evaluar nuestro modelo, respondemos 4 preguntas clave sobre su desempeño:
 
-1. Exactitud: 87%
-2. Precisión: 84%
-3. Recall: 84%
-4. f1-score: 84%
+---
+
+### 1. ¿Cuántas predicciones totales son correctas?
+**Métrica: Exactitud (Accuracy) = 87%**
+
+---
+
+### 2. Cuando el modelo predice un nivel específico, ¿qué tan seguido acierta?
+**Métrica: Precisión (Precision) = 84%**
+
+---
+
+### 3. ¿Cuántos casos reales de cada nivel logra detectar el modelo?
+**Métrica: Exhaustividad (Recall) = 84%**
+
+---
+
+### 4. ¿Cuál es el desempeño general balanceado del modelo?
+**Métrica: F1-Score = 84%**
+
+---
 """
 
 # Aquí va la interfaz grafica
