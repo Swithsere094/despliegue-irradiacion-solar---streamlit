@@ -37,28 +37,18 @@ modelo, labelEncoder, variables = pickle.load(open(filename, 'rb'))
 # data = pd.read_csv("Datos_irradiancia_Solar_Futuros.csv")
 # data.head()
 
-"""# **Predicción de irradiancia solar**
-
-## Calidad del Modelo
+"""## Calidad del Modelo
 
 Para evaluar nuestro modelo, respondemos 4 preguntas clave sobre su desempeño:
-
----
 
 ### 1. ¿Cuántas predicciones totales son correctas?
 **Métrica: Exactitud (Accuracy) = 87%**
 
----
-
 ### 2. Cuando el modelo predice un nivel específico, ¿qué tan seguido acierta?
 **Métrica: Precisión (Precision) = 84%**
 
----
-
 ### 3. ¿Cuántos casos reales de cada nivel logra detectar el modelo?
 **Métrica: Exhaustividad (Recall) = 84%**
-
----
 
 ### 4. ¿Cuál es el desempeño general balanceado del modelo?
 **Métrica: F1-Score = 84%**
@@ -72,7 +62,7 @@ import streamlit as st
 
 # Sidebar con información de las variables del modelo:
 with st.sidebar:
-    st.header("ℹ️ Información")
+    st.header("Información")
     st.write("""
     **Variables del modelo:**
     - Hora (0-23)
@@ -85,6 +75,9 @@ with st.sidebar:
     """)
 
 with st.form("formulario_prediccion"):
+
+  st.header("Predicción de Irradiancia Solar")
+
   st.subheader("Hora y Mes")
 
   # Hora
@@ -194,9 +187,9 @@ with st.form("formulario_prediccion"):
   st.divider()
   submitted = st.form_submit_button("Realizar Predicción", use_container_width=True)
 
-"""# Predicción:"""
-
 if submitted:
+
+  st.subheader("Predicción:")
 
   datos_input = {
       'Hora': hora,
